@@ -2765,13 +2765,14 @@ window.DASHBOARD_DATA = {
       {
         "blocked_reasons": [],
         "evidence": [
+          "required.patient_overlap.status",
           "required.patient_overlap.overlaps",
           "split_counts",
           "objectives.evaluation",
           "probability_output_planned"
         ],
         "id": "roc_auc",
-        "reason": "설정된 기본 정책에 포함된 블록입니다. 양성률 약 11%의 이진 정답에서 임계값 없이 순위 구분력을 보는 초안 지표입니다. 환자 중복(분할 간 겹침)과 독립 holdout 아님으로 낙관적일 수 있어 주지표 확정은 사람이 합니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
+        "reason": "설정된 기본 정책에 포함된 블록입니다. 재입원 위험 순위화 능력(변별력)을 임계값 없이 요약합니다. 두 클래스가 모두 있어 계산 가능하나, 환자 중복(failed)과 validation 재사용 때문에 독립 임상 검증이 아닌 교육용 참고치로만 해석합니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
         "required": false,
         "requires": [
           "y_true",
@@ -2789,11 +2790,12 @@ window.DASHBOARD_DATA = {
         "blocked_reasons": [],
         "evidence": [
           "coordinated.cohort",
-          "required.patient_overlap.status",
-          "objectives.evaluation"
+          "split_counts",
+          "labels_planned",
+          "probability_output_planned"
         ],
         "id": "average_precision",
-        "reason": "설정된 기본 정책에 포함된 블록입니다. 불균형(양성 약 11%) 상황에서 양성 탐지 정밀도-재현율 관점을 보완합니다. 임계값 불필요하나 환자 중복·정답 관측 한계로 해석을 제한해야 합니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
+        "reason": "설정된 기본 정책에 포함된 블록입니다. 양성률이 약 11%로 불균형하여 AUC를 보완하는 정밀도-재현율 요약이 유용합니다. 임계값이 필요 없으나 분할 간 환자 중복과 전처리 계보 불확실성으로 성능이 낙관적일 수 있습니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
         "required": false,
         "requires": [
           "y_true",
@@ -2812,10 +2814,10 @@ window.DASHBOARD_DATA = {
         "evidence": [
           "objectives.evaluation",
           "probability_output_planned",
-          "labels_planned"
+          "coordinated.cohort"
         ],
         "id": "brier_score",
-        "reason": "설정된 기본 정책에 포함된 블록입니다. 확률 출력의 정확도를 평가하는 지표로 probability_quality 목적에 부합합니다. 값은 이후 계산 대상이며 현재 결과가 아니고 임상 사용 승인을 뜻하지 않습니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
+        "reason": "설정된 기본 정책에 포함된 블록입니다. 확률 품질 목적에 맞게 예측 확률의 제곱오차를 측정합니다. 추가 매개변수가 필요 없으며, 낮은 사건률 영향과 환자 단위 독립성 부재를 함께 해석해야 합니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
         "required": false,
         "requires": [
           "y_true",
@@ -2834,10 +2836,11 @@ window.DASHBOARD_DATA = {
         "evidence": [
           "objectives.evaluation",
           "parameters.n_bins_defined",
-          "probability_output_planned"
+          "probability_output_planned",
+          "coordinated.demographics"
         ],
         "id": "calibration_curve",
-        "reason": "설정된 기본 정책에 포함된 블록입니다. 예측 확률과 관측 재입원율의 일치를 구간별로 확인합니다. n_bins는 기본값(10)을 쓰며 사람이 조정 가능하고, 소규모 구간과 라벨 한계에 주의해야 합니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
+        "reason": "설정된 기본 정책에 포함된 블록입니다. 예측 확률과 관찰 사건률의 일치를 구간별로 확인합니다. n_bins는 기본 10을 쓸 수 있으나 사람이 확정하지 않았고, 소수 하위군은 표본이 작아 구간 추정이 불안정할 수 있습니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
         "required": false,
         "requires": [
           "y_true",
@@ -2867,12 +2870,12 @@ window.DASHBOARD_DATA = {
     ],
     "threshold": null
   },
-  "generated_at": "2026-10-17T08:59:26.769488+00:00",
+  "generated_at": "2026-10-17T09:04:53.062607+00:00",
   "local_smoke": null,
   "pipeline": {
     "issue_number": 1,
     "repository": "t-hajongkim/Medical-ML-SDLC-Test4",
-    "source_run": "39019381828",
+    "source_run": "39019395761",
     "stage": "evaluation-plan",
     "status": "success"
   },
@@ -2880,13 +2883,13 @@ window.DASHBOARD_DATA = {
   "remote_model_evaluation": null,
   "remote_pr1": {
     "code_commit": "a13c64b7320042a6fac7f36c7aa972b41279d800",
-    "head": "4c903e2b94c114d2bea242f11c36fd9873035373",
+    "head": "99b788aec9fed41203f11a527e8d815ca54f6c11",
     "issue": 1,
     "merge_at": null,
     "merge_commit": null,
     "pr": 2,
     "repository": "t-hajongkim/Medical-ML-SDLC-Test4",
-    "source_run": "39018855203",
+    "source_run": "39019395761",
     "status": "open",
     "url": "https://github.com/t-hajongkim/Medical-ML-SDLC-Test4/pull/2"
   },
