@@ -2,14 +2,14 @@
   "record": {
     "schema_version": 1,
     "provider": "github-copilot-cloud-agent",
-    "context_hash": "5f9dbf59dc030b8c195c4741b67932f550db140d706ac7cda03023e53aa27f66",
+    "context_hash": "2f82d0edf83e336b43fa5cb986e5e338f7c785ddee59ef9994c16eec630befe4",
     "request_hash": "2cad89531aae76c60e6ec039733a519d1c6376e99b585f8af81030d11b707b1a",
     "base_selection_hash": "c71488a9c9d9d9ce07807673efffec3f1fe62e0e2ba01b60a0131e7a72e14459",
     "selection_hash": "c71488a9c9d9d9ce07807673efffec3f1fe62e0e2ba01b60a0131e7a72e14459",
     "schema_hash": "ee54ec643d55a5f5e8e8d8456f5252426855abd1580c6f0904dfda883c9abb9f",
-    "feedback_hash": "43791330b2e1971990a714a4ae654d108247af300db622ae3cb8fddcce41367b",
+    "feedback_hash": "f52353c6a60792c981ae7e4e454d19945c185f257f741a6eca3a9c57f90bd55a",
     "feedback_ids": [
-      6231944500
+      6232026608
     ],
     "eda_add": [],
     "objectives": {
@@ -25,8 +25,8 @@
         "probability_quality"
       ]
     },
-    "reason": "등록된 7개 점검이 이미 모두 실행되어 추가로 선택할 점검이 없습니다. 피드백('계속 진행해줘')은 설정 변경 요청이 아니므로 선택 변경 없이 진행합니다.",
-    "coordination_hash": "99388418671be6edd4f5c7c017cda23239cd17c5a70d1fc2b2b6d9fa63ecee7e"
+    "reason": "기본 EDA에서 등록된 7개 점검이 모두 실행되어 추가할 점검이 없습니다. 피드백 '승인'은 설정 변경 요청이 아니므로 선택을 바꾸지 않습니다.",
+    "coordination_hash": "1145340c8d0ff6d73c41c0fce7c11cb221c0068de55b6d7c6cb6b423e1c48f48"
   },
   "code_commit": "a13c64b7320042a6fac7f36c7aa972b41279d800",
   "schema": {
@@ -3228,5 +3228,5 @@
       }
     }
   },
-  "coordination_hash": "cfd53884c66ebb297645a8e688705fb789ec3968a3da11472bc5a480a777e0ae"
+  "coordination_hash": "b43834c4a5fe14cc524e0514aa4d7b97e6ee000bbb8961d7c579a9eca1116646"
 }

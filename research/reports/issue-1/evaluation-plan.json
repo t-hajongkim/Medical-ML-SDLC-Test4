@@ -15,7 +15,7 @@
         "ai"
       ],
       "state": "eligible_planned_inputs",
-      "reason": "설정된 기본 정책에 포함된 블록입니다. 양성률 약 11%의 이진 정답에서 임계값 없이 순위 구분력을 보는 초안 지표입니다. 환자 중복(분할 간 겹침)과 독립 holdout 아님으로 낙관적일 수 있어 주지표 확정은 사람이 합니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
+      "reason": "설정된 기본 정책에 포함된 블록입니다. 재입원 위험 순위화 능력(변별력)을 임계값 없이 요약합니다. 두 클래스가 모두 있어 계산 가능하나, 환자 중복(failed)과 validation 재사용 때문에 독립 임상 검증이 아닌 교육용 참고치로만 해석합니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
       "blocked_reasons": [],
       "requires": [
         "y_true",
@@ -25,6 +25,7 @@
       "requires_context": [],
       "required": false,
       "evidence": [
+        "required.patient_overlap.status",
         "required.patient_overlap.overlaps",
         "split_counts",
         "objectives.evaluation",
@@ -38,7 +39,7 @@
         "ai"
       ],
       "state": "eligible_planned_inputs",
-      "reason": "설정된 기본 정책에 포함된 블록입니다. 불균형(양성 약 11%) 상황에서 양성 탐지 정밀도-재현율 관점을 보완합니다. 임계값 불필요하나 환자 중복·정답 관측 한계로 해석을 제한해야 합니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
+      "reason": "설정된 기본 정책에 포함된 블록입니다. 양성률이 약 11%로 불균형하여 AUC를 보완하는 정밀도-재현율 요약이 유용합니다. 임계값이 필요 없으나 분할 간 환자 중복과 전처리 계보 불확실성으로 성능이 낙관적일 수 있습니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
       "blocked_reasons": [],
       "requires": [
         "y_true",
@@ -49,8 +50,9 @@
       "required": false,
       "evidence": [
         "coordinated.cohort",
-        "required.patient_overlap.status",
-        "objectives.evaluation"
+        "split_counts",
+        "labels_planned",
+        "probability_output_planned"
       ]
     },
     {
@@ -60,7 +62,7 @@
         "ai"
       ],
       "state": "eligible_planned_inputs",
-      "reason": "설정된 기본 정책에 포함된 블록입니다. 확률 출력의 정확도를 평가하는 지표로 probability_quality 목적에 부합합니다. 값은 이후 계산 대상이며 현재 결과가 아니고 임상 사용 승인을 뜻하지 않습니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
+      "reason": "설정된 기본 정책에 포함된 블록입니다. 확률 품질 목적에 맞게 예측 확률의 제곱오차를 측정합니다. 추가 매개변수가 필요 없으며, 낮은 사건률 영향과 환자 단위 독립성 부재를 함께 해석해야 합니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
       "blocked_reasons": [],
       "requires": [
         "y_true",
@@ -72,7 +74,7 @@
       "evidence": [
         "objectives.evaluation",
         "probability_output_planned",
-        "labels_planned"
+        "coordinated.cohort"
       ]
     },
     {
@@ -82,7 +84,7 @@
         "ai"
       ],
       "state": "eligible_planned_inputs",
-      "reason": "설정된 기본 정책에 포함된 블록입니다. 예측 확률과 관측 재입원율의 일치를 구간별로 확인합니다. n_bins는 기본값(10)을 쓰며 사람이 조정 가능하고, 소규모 구간과 라벨 한계에 주의해야 합니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
+      "reason": "설정된 기본 정책에 포함된 블록입니다. 예측 확률과 관찰 사건률의 일치를 구간별로 확인합니다. n_bins는 기본 10을 쓸 수 있으나 사람이 확정하지 않았고, 소수 하위군은 표본이 작아 구간 추정이 불안정할 수 있습니다. 입력은 이후 생성할 계획이며 아직 계산하지 않았습니다. 실제 지표 실행 시 행 정합과 수학적 요건을 다시 검증합니다.",
       "blocked_reasons": [],
       "requires": [
         "y_true",
@@ -94,7 +96,8 @@
       "evidence": [
         "objectives.evaluation",
         "parameters.n_bins_defined",
-        "probability_output_planned"
+        "probability_output_planned",
+        "coordinated.demographics"
       ]
     }
   ],
