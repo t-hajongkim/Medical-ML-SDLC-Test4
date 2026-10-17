@@ -2870,7 +2870,7 @@ window.DASHBOARD_DATA = {
     ],
     "threshold": null
   },
-  "generated_at": "2026-10-17T09:12:12.127004+00:00",
+  "generated_at": "2026-10-17T09:24:51.887842+00:00",
   "local_smoke": null,
   "pipeline": {
     "issue_number": 1,
@@ -3087,10 +3087,10 @@ window.DASHBOARD_DATA = {
   },
   "remote_pr2": {
     "headRefOid": "d3b26e96b5deb607d055f09ff8b1db96e5906c4e",
-    "isDraft": true,
+    "isDraft": false,
     "number": 3,
-    "review_status": "사람 리뷰 대기",
-    "state": "OPEN",
+    "review_status": "닫힘",
+    "state": "CLOSED",
     "url": "https://github.com/t-hajongkim/Medical-ML-SDLC-Test4/pull/3"
   },
   "schema": 1,
