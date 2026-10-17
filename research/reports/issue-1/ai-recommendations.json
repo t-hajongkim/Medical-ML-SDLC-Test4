@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "provider": "github-copilot-cloud-agent",
-  "context_hash": "31b45ba1648c93ba9d2a10b7ac04d780058b269985461692e06a3f7438cf3638",
+  "context_hash": "fb159d2b243ab2f61d604d19b1400ae6e478b309e5efad50d0b364197d60b796",
   "status": "provided",
   "eda": [
     {
       "id": "label_observability",
-      "reason": "이미 검증된 추가 점검입니다. 인코딩된 정답(<30=1, 그 외 0)은 통과했지만 원본 라벨 정렬, 추적 완결성, 외부 병원 재입원 포착은 검증불가이므로 정답 0을 무사건으로 해석하지 않도록 주의합니다.",
+      "reason": "이미 검증·실행된 점검입니다. 정답 인코딩(<30→1)은 통과했으나 원본 라벨 정렬, 추적 완결성, 외부 병원 재입원 포착은 확인 불가이므로 target 0을 완전한 무사건으로 해석할 수 없습니다.",
       "evidence": [
         "coordinated.label_observability",
         "target"
@@ -14,15 +14,14 @@
     },
     {
       "id": "preprocessing_lineage",
-      "reason": "이미 검증된 추가 점검입니다. 인종 결측의 Caucasian 대치, 표준화, 타깃 인코딩의 적합 범위가 검증불가이며 검증 분할이 모델 개발에 사용되어 독립 holdout이 아니라는 한계를 유지합니다.",
+      "reason": "이미 검증·실행된 점검입니다. 대치·스케일링·타깃 인코딩의 적합 범위가 확인 불가이고 검증 분할이 모델 개발에 재사용되었으므로 독립 holdout이나 누출 없음 주장은 할 수 없습니다.",
       "evidence": [
-        "coordinated.preprocessing_lineage",
-        "coordinated.demographics"
+        "coordinated.preprocessing_lineage"
       ]
     },
     {
       "id": "prediction_timing",
-      "reason": "이미 검증된 추가 점검입니다. 예측 시점 선언과 특성 가용성 사전이 없어 퇴원·재원 정보 후보 특성의 사용 가능 시점이 검증불가입니다. 이름 기반 선별이며 누수 증명은 아닙니다.",
+      "reason": "이미 검증·실행된 점검입니다. 예측 시점과 특성 가용성 문서가 없어 확인 불가이며, 퇴원·재원 관련 후보 특성은 입원 시점 사용을 가정할 수 없습니다.",
       "evidence": [
         "coordinated.prediction_timing"
       ]
@@ -31,35 +30,35 @@
   "evaluation": [
     {
       "id": "roc_auc",
-      "reason": "변별력 목적에 부합하며 추가 매개변수가 필요 없습니다. 정답 양성률이 약 11%이고 환자 중복(train-validation 5,055명 등)이 있어 낙관적일 수 있으며 독립 임상 검증이 아닙니다.",
+      "reason": "양성률 약 11%의 이진 정답에서 임계값 없이 순위 구분력을 보는 초안 지표입니다. 환자 중복(분할 간 겹침)과 독립 holdout 아님으로 낙관적일 수 있어 주지표 확정은 사람이 합니다.",
       "evidence": [
-        "objectives.evaluation",
         "required.patient_overlap.overlaps",
         "split_counts",
+        "objectives.evaluation",
         "probability_output_planned"
       ]
     },
     {
       "id": "average_precision",
-      "reason": "양성률이 낮은 불균형 자료에서 양성 탐지 성능을 보완합니다. 임계값이 필요 없으나 분할 간 환자 중복과 개발 재사용으로 해석에 제한이 있습니다.",
+      "reason": "불균형(양성 약 11%) 상황에서 양성 탐지 정밀도-재현율 관점을 보완합니다. 임계값 불필요하나 환자 중복·정답 관측 한계로 해석을 제한해야 합니다.",
       "evidence": [
         "coordinated.cohort",
         "required.patient_overlap.status",
-        "labels_planned"
+        "objectives.evaluation"
       ]
     },
     {
       "id": "brier_score",
-      "reason": "확률 품질 목적에 맞는 지표로 확률 출력이 계획되어 있습니다. 환자 중복과 정답 0의 추적 불완전 가능성으로 절대 해석은 제한됩니다.",
+      "reason": "확률 출력의 정확도를 평가하는 지표로 probability_quality 목적에 부합합니다. 값은 이후 계산 대상이며 현재 결과가 아니고 임상 사용 승인을 뜻하지 않습니다.",
       "evidence": [
         "objectives.evaluation",
         "probability_output_planned",
-        "coordinated.label_observability"
+        "labels_planned"
       ]
     },
     {
       "id": "calibration_curve",
-      "reason": "예측 확률과 관찰 사건률의 구간별 일치를 확인합니다. n_bins는 미정이라 기본값 사용 여부를 사람이 검토해야 하며 소수 하위집단의 해석은 표본 수에 제한됩니다.",
+      "reason": "예측 확률과 관측 재입원율의 일치를 구간별로 확인합니다. n_bins는 기본값(10)을 쓰며 사람이 조정 가능하고, 소규모 구간과 라벨 한계에 주의해야 합니다.",
       "evidence": [
         "objectives.evaluation",
         "parameters.n_bins_defined",

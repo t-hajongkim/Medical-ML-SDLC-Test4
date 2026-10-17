@@ -84,7 +84,7 @@
         "ai"
       ],
       "state": "selected_for_diagnosis",
-      "reason": "이미 검증된 추가 점검입니다. 인코딩된 정답(<30=1, 그 외 0)은 통과했지만 원본 라벨 정렬, 추적 완결성, 외부 병원 재입원 포착은 검증불가이므로 정답 0을 무사건으로 해석하지 않도록 주의합니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
+      "reason": "이미 검증·실행된 점검입니다. 정답 인코딩(<30→1)은 통과했으나 원본 라벨 정렬, 추적 완결성, 외부 병원 재입원 포착은 확인 불가이므로 target 0을 완전한 무사건으로 해석할 수 없습니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
       "blocked_reasons": [],
       "requires": [
         "metadata",
@@ -104,7 +104,7 @@
         "ai"
       ],
       "state": "selected_for_diagnosis",
-      "reason": "이미 검증된 추가 점검입니다. 인종 결측의 Caucasian 대치, 표준화, 타깃 인코딩의 적합 범위가 검증불가이며 검증 분할이 모델 개발에 사용되어 독립 holdout이 아니라는 한계를 유지합니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
+      "reason": "이미 검증·실행된 점검입니다. 대치·스케일링·타깃 인코딩의 적합 범위가 확인 불가이고 검증 분할이 모델 개발에 재사용되었으므로 독립 holdout이나 누출 없음 주장은 할 수 없습니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
       "blocked_reasons": [],
       "requires": [
         "data_manifest"
@@ -113,8 +113,7 @@
       "requires_context": [],
       "required": false,
       "evidence": [
-        "coordinated.preprocessing_lineage",
-        "coordinated.demographics"
+        "coordinated.preprocessing_lineage"
       ]
     },
     {
@@ -123,7 +122,7 @@
         "ai"
       ],
       "state": "selected_for_diagnosis",
-      "reason": "이미 검증된 추가 점검입니다. 예측 시점 선언과 특성 가용성 사전이 없어 퇴원·재원 정보 후보 특성의 사용 가능 시점이 검증불가입니다. 이름 기반 선별이며 누수 증명은 아닙니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
+      "reason": "이미 검증·실행된 점검입니다. 예측 시점과 특성 가용성 문서가 없어 확인 불가이며, 퇴원·재원 관련 후보 특성은 입원 시점 사용을 가정할 수 없습니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
       "blocked_reasons": [],
       "requires": [
         "feature_columns"
