@@ -2870,13 +2870,13 @@ window.DASHBOARD_DATA = {
     ],
     "threshold": null
   },
-  "generated_at": "2026-10-17T09:11:37.313222+00:00",
+  "generated_at": "2026-10-17T09:12:12.127004+00:00",
   "local_smoke": null,
   "pipeline": {
     "issue_number": 1,
     "repository": "t-hajongkim/Medical-ML-SDLC-Test4",
-    "source_run": "39020110095",
-    "stage": "evaluation",
+    "source_run": "39020172879",
+    "stage": "result",
     "status": "success"
   },
   "purpose": "GitHub Actions aggregate stage snapshot",
@@ -3085,7 +3085,14 @@ window.DASHBOARD_DATA = {
     "status": "merged",
     "url": "https://github.com/t-hajongkim/Medical-ML-SDLC-Test4/pull/2"
   },
-  "remote_pr2": null,
+  "remote_pr2": {
+    "headRefOid": "d3b26e96b5deb607d055f09ff8b1db96e5906c4e",
+    "isDraft": true,
+    "number": 3,
+    "review_status": "사람 리뷰 대기",
+    "state": "OPEN",
+    "url": "https://github.com/t-hajongkim/Medical-ML-SDLC-Test4/pull/3"
+  },
   "schema": 1,
   "target": {
     "additional_requests": "EDA 결과와 데이터 제약을 근거로 평가 지표 추천 초안을 제시해 주세요.\n이 Issue 단계에서는 모델 학습·추론·최종 성능 평가를 실행하지 않습니다.",
