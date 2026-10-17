@@ -2868,12 +2868,12 @@ window.DASHBOARD_DATA = {
     ],
     "threshold": null
   },
-  "generated_at": "2026-10-17T08:46:58.503533+00:00",
+  "generated_at": "2026-10-17T08:50:31.337897+00:00",
   "local_smoke": null,
   "pipeline": {
     "issue_number": 1,
     "repository": "t-hajongkim/Medical-ML-SDLC-Test4",
-    "source_run": "39018178235",
+    "source_run": "39018836456",
     "stage": "evaluation-plan",
     "status": "success"
   },
@@ -2881,7 +2881,7 @@ window.DASHBOARD_DATA = {
   "remote_model_evaluation": null,
   "remote_pr1": {
     "code_commit": "a13c64b7320042a6fac7f36c7aa972b41279d800",
-    "head": "29fdfc46025590cf1e707dc5e5c7501ac277d19d",
+    "head": "eee1b5de7631497577222601995785cba3accebf",
     "issue": 1,
     "merge_at": null,
     "merge_commit": null,
