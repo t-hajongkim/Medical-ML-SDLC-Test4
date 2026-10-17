@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "provider": "github-copilot-cloud-agent",
+  "context_hash": "a026a88313fec3abd1c19a08310b79e0577df767ef31c57baf400ac6816785d6",
+  "status": "provided",
+  "eda": [
+    {
+      "id": "label_observability",
+      "reason": "이미 검증된 EDA 선택입니다. 정답 인코딩(<30→1)은 통과했지만 원본 라벨 정렬·추적 완결성·외부 병원 재입원 포착은 확인 불가이므로, target 0을 완전한 30일 무사건으로 해석하지 않도록 한계를 유지합니다.",
+      "evidence": [
+        "coordinated.label_observability",
+        "target"
+      ]
+    },
+    {
+      "id": "preprocessing_lineage",
+      "reason": "이미 검증된 EDA 선택입니다. 자산 무결성은 통과했으나 대치·스케일링·타깃 인코딩의 적합 범위가 확인 불가이고 validation이 모델 개발에 쓰였으므로 독립 holdout 또는 누수 없음으로 해석할 수 없습니다.",
+      "evidence": [
+        "coordinated.preprocessing_lineage"
+      ]
+    },
+    {
+      "id": "prediction_timing",
+      "reason": "이미 검증된 EDA 선택입니다. 예측 시점과 특성 가용성 근거가 없어 확인 불가이며, 퇴원·재원 정보 후보 특성은 입원 시점 사용 가능성을 가정하지 않고 해석에 주의해야 합니다.",
+      "evidence": [
+        "coordinated.prediction_timing"
+      ]
+    }
+  ],
+  "evaluation": [
+    {
+      "id": "roc_auc",
+      "reason": "재입원 위험 순위화 능력(변별력)을 임계값 없이 요약합니다. 두 클래스가 모두 있어 계산 가능하나, 환자 중복(failed)과 validation 재사용 때문에 독립 임상 검증이 아닌 교육용 참고치로만 해석합니다.",
+      "evidence": [
+        "required.patient_overlap.status",
+        "required.patient_overlap.overlaps",
+        "split_counts",
+        "objectives.evaluation",
+        "probability_output_planned"
+      ]
+    },
+    {
+      "id": "average_precision",
+      "reason": "양성률이 약 11%로 불균형하여 AUC를 보완하는 정밀도-재현율 요약이 유용합니다. 임계값이 필요 없으나 분할 간 환자 중복과 전처리 계보 불확실성으로 성능이 낙관적일 수 있습니다.",
+      "evidence": [
+        "coordinated.cohort",
+        "split_counts",
+        "labels_planned",
+        "probability_output_planned"
+      ]
+    },
+    {
+      "id": "brier_score",
+      "reason": "확률 품질 목적에 맞게 예측 확률의 제곱오차를 측정합니다. 추가 매개변수가 필요 없으며, 낮은 사건률 영향과 환자 단위 독립성 부재를 함께 해석해야 합니다.",
+      "evidence": [
+        "objectives.evaluation",
+        "probability_output_planned",
+        "coordinated.cohort"
+      ]
+    },
+    {
+      "id": "calibration_curve",
+      "reason": "예측 확률과 관찰 사건률의 일치를 구간별로 확인합니다. n_bins는 기본 10을 쓸 수 있으나 사람이 확정하지 않았고, 소수 하위군은 표본이 작아 구간 추정이 불안정할 수 있습니다.",
+      "evidence": [
+        "objectives.evaluation",
+        "parameters.n_bins_defined",
+        "probability_output_planned",
+        "coordinated.demographics"
+      ]
+    }
+  ]
+}

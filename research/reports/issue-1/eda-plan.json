@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "stage": "eda",
+  "selected_ids": [
+    "schema",
+    "patient_overlap",
+    "demographics",
+    "cohort",
+    "label_observability",
+    "preprocessing_lineage",
+    "prediction_timing"
+  ],
+  "items": [
+    {
+      "id": "schema",
+      "sources": [
+        "default"
+      ],
+      "state": "selected_for_diagnosis",
+      "reason": "설정된 기본 정책에 포함된 블록입니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
+      "blocked_reasons": [],
+      "requires": [
+        "metadata",
+        "feature_columns",
+        "expected_feature_columns",
+        "feature_rows"
+      ],
+      "requires_parameters": [],
+      "requires_context": [],
+      "required": true,
+      "evidence": []
+    },
+    {
+      "id": "patient_overlap",
+      "sources": [
+        "default"
+      ],
+      "state": "selected_for_diagnosis",
+      "reason": "설정된 기본 정책에 포함된 블록입니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
+      "blocked_reasons": [],
+      "requires": [
+        "metadata"
+      ],
+      "requires_parameters": [],
+      "requires_context": [],
+      "required": true,
+      "evidence": []
+    },
+    {
+      "id": "demographics",
+      "sources": [
+        "default"
+      ],
+      "state": "selected_for_diagnosis",
+      "reason": "설정된 기본 정책에 포함된 블록입니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
+      "blocked_reasons": [],
+      "requires": [
+        "metadata"
+      ],
+      "requires_parameters": [],
+      "requires_context": [],
+      "required": false,
+      "evidence": []
+    },
+    {
+      "id": "cohort",
+      "sources": [
+        "default"
+      ],
+      "state": "selected_for_diagnosis",
+      "reason": "설정된 기본 정책에 포함된 블록입니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
+      "blocked_reasons": [],
+      "requires": [
+        "metadata"
+      ],
+      "requires_parameters": [],
+      "requires_context": [],
+      "required": false,
+      "evidence": []
+    },
+    {
+      "id": "label_observability",
+      "sources": [
+        "ai"
+      ],
+      "state": "selected_for_diagnosis",
+      "reason": "이미 검증된 EDA 선택입니다. 정답 인코딩(<30→1)은 통과했지만 원본 라벨 정렬·추적 완결성·외부 병원 재입원 포착은 확인 불가이므로, target 0을 완전한 30일 무사건으로 해석하지 않도록 한계를 유지합니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
+      "blocked_reasons": [],
+      "requires": [
+        "metadata",
+        "target_mapping"
+      ],
+      "requires_parameters": [],
+      "requires_context": [],
+      "required": false,
+      "evidence": [
+        "coordinated.label_observability",
+        "target"
+      ]
+    },
+    {
+      "id": "preprocessing_lineage",
+      "sources": [
+        "ai"
+      ],
+      "state": "selected_for_diagnosis",
+      "reason": "이미 검증된 EDA 선택입니다. 자산 무결성은 통과했으나 대치·스케일링·타깃 인코딩의 적합 범위가 확인 불가이고 validation이 모델 개발에 쓰였으므로 독립 holdout 또는 누수 없음으로 해석할 수 없습니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
+      "blocked_reasons": [],
+      "requires": [
+        "data_manifest"
+      ],
+      "requires_parameters": [],
+      "requires_context": [],
+      "required": false,
+      "evidence": [
+        "coordinated.preprocessing_lineage"
+      ]
+    },
+    {
+      "id": "prediction_timing",
+      "sources": [
+        "ai"
+      ],
+      "state": "selected_for_diagnosis",
+      "reason": "이미 검증된 EDA 선택입니다. 예측 시점과 특성 가용성 근거가 없어 확인 불가이며, 퇴원·재원 정보 후보 특성은 입원 시점 사용 가능성을 가정하지 않고 해석에 주의해야 합니다. 자료나 근거가 부족하면 진단 블록이 확인 불가로 보고합니다.",
+      "blocked_reasons": [],
+      "requires": [
+        "feature_columns"
+      ],
+      "requires_parameters": [],
+      "requires_context": [],
+      "required": false,
+      "evidence": [
+        "coordinated.prediction_timing"
+      ]
+    }
+  ],
+  "defaults": [
+    "schema",
+    "patient_overlap",
+    "demographics",
+    "cohort"
+  ],
+  "required_ids": [
+    "schema",
+    "patient_overlap"
+  ],
+  "ai_recommended_ids": [
+    "label_observability",
+    "preprocessing_lineage",
+    "prediction_timing"
+  ],
+  "user_added_ids": [],
+  "user_excluded_ids": [],
+  "objectives": [
+    "data_quality",
+    "population_description",
+    "prediction_readiness",
+    "outcome_observability",
+    "preprocessing_provenance"
+  ],
+  "ai_status": "provided",
+  "approval_required": true,
+  "planning_complete": true,
+  "draft": false,
+  "clinical_use_approved": false
+}
